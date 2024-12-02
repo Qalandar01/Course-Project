@@ -12,6 +12,11 @@
 <%
     List<Course> courses = CourseRepo.getAllCourses();
 %>
+<form action="/report.jsp">
+    <button class="btn btn-warning">
+        Report
+    </button>
+</form>
 <hr>
 <div class="row">
     <div class="col-6">
