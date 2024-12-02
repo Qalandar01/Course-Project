@@ -14,7 +14,11 @@
   Integer courseId = Integer.parseInt(request.getParameter("courseId"));
   List<Module> modules = ModuleRepo.getModulesByCourseId(courseId);
 %>
-
+<form action="/course.jsp">
+  <button class="btn btn-dark">
+    Back
+  </button>
+</form>
 <hr>
 <div class="row">
   <div class="col-6">

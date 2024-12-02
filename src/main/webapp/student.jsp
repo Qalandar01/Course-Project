@@ -1,6 +1,7 @@
 <%@ page import="org.example.demo6.repository.StudentRepo" %>
 <%@ page import="org.example.demo6.entity.Student" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.example.demo6.repository.GroupRepo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,8 +14,15 @@
 <%
     Integer groupId = Integer.parseInt(request.getParameter("groupId"));
     List<Student> students = StudentRepo.getStudentsByGroupId(groupId);
+    Integer moduleId = GroupRepo.getModuleId(groupId);
 
 %>
+<form action="/groups.jsp">
+    <input type="hidden" value="<%=moduleId%>" name="moduleId">
+    <button class="btn btn-dark">
+        Back
+    </button>
+</form>
 <hr>
 <div class="row">
     <div class="col-6">

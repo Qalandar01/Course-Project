@@ -24,4 +24,9 @@ public class Payment {
 
     @ManyToOne
     private Student student;
+
+    public Payment(Integer amount, Student student) {
+        this.amount = amount;
+        this.student = student;
+    }
 }
