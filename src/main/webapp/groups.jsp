@@ -2,6 +2,7 @@
 <%@ page import="org.example.demo6.entity.Groups" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.example.demo6.repository.ModuleRepo" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -11,10 +12,20 @@
   </head>
 
   <body>
+  <form action="">
+    <div class="form-group">
+      <input type="text" placeholder="Search..." name="search">
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </form>
 
   <%
+
+    String search = Objects.requireNonNullElse(request.getParameter("search"),"");
+    Integer pages = Integer.parseInt(Objects.requireNonNullElse(request.getParameter("page"),"1"));
+
     Integer moduleId = Integer.parseInt(request.getParameter("moduleId"));
-    List<Groups> groups = GroupRepo.getGroupsByModuleId(moduleId);
+    List<Groups> groups = GroupRepo.getGroupsByModuleId(moduleId,search,pages);
     Integer courseId = ModuleRepo.getCourseId(moduleId);
   %>
   <form action="/module.jsp">
@@ -56,6 +67,16 @@
         %>
         </tbody>
       </table>
+      <%
+        Long count = GroupRepo.count(moduleId);
+        int pageCount = (int) Math.ceil(count / 10.0);
+
+        for (int i = 1; i <= pageCount; i++) {
+      %>
+      <a href="?page=<%=i%>&search=<%=search%>" class="btn btn-dark"><%=i%></a>
+      <%
+        }
+      %>
     </div>
   </div>
 

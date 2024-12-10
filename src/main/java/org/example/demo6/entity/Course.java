@@ -1,21 +1,18 @@
 package org.example.demo6.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.example.demo6.base.BaseEntity;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Course extends BaseEntity {
+
     private String name;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.demo6.base.BaseEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -13,10 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 
 @Entity
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Payment extends BaseEntity {
+
     private Integer amount;
 
     @CreationTimestamp

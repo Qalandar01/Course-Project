@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.demo6.base.BaseEntity;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
-public class Module {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Module extends BaseEntity {
+
     private String name;
 
     @ManyToOne

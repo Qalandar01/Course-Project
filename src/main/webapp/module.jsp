@@ -1,6 +1,7 @@
 <%@ page import="org.example.demo6.repository.ModuleRepo" %>
 <%@ page import="org.example.demo6.entity.Module" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,9 +11,18 @@
   <title>Module</title>
 </head>
 <body>
+<form action="">
+  <div class="form-group">
+    <input type="text" placeholder="Search..." name="search">
+    <button class="btn btn-primary">Search</button>
+  </div>
+</form>
 <%
+  String search = Objects.requireNonNullElse(request.getParameter("search"),"");
+  Integer pages = Integer.parseInt(Objects.requireNonNullElse(request.getParameter("page"),"1"));
+
   Integer courseId = Integer.parseInt(request.getParameter("courseId"));
-  List<Module> modules = ModuleRepo.getModulesByCourseId(courseId);
+  List<Module> modules = ModuleRepo.getModulesByCourseId(courseId,search,pages);
 %>
 <form action="/course.jsp">
   <button class="btn btn-dark">
@@ -52,6 +62,16 @@
       %>
       </tbody>
     </table>
+    <%
+      Long count = ModuleRepo.count(courseId);
+      int pageCount = (int) Math.ceil(count / 10.0);
+
+      for (int i = 1; i <= pageCount; i++) {
+    %>
+    <a href="?page=<%=i%>&search=<%=search%>" class="btn btn-dark"><%=i%></a>
+    <%
+      }
+    %>
   </div>
 </div>
 

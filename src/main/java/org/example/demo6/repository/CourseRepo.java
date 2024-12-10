@@ -10,12 +10,17 @@ import static org.example.demo6.listerner.MyListerner.EMF;
 
 public class CourseRepo {
 
-    public static List<Course> getAllCourses() {
+    public static List<Course> getAllCourses(Integer pages, String search) {
+        pages--;
         try (
                 EntityManager entityManager = EMF.createEntityManager();
 
         ) {
-            return entityManager.createQuery("from Course ", Course.class).getResultList();
+            return entityManager.createQuery("from Course c where c.name ilike :search", Course.class)
+                    .setParameter("search","%" + search + "%")
+                    .setFirstResult(pages*5)
+                    .setMaxResults(5)
+                    .getResultList();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -38,6 +43,17 @@ public class CourseRepo {
                                                                                              join Payment p on p.student.id = s.id
                                                                                              group by c.name
                     """, ReportData.class).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Long count() {
+        try (
+                EntityManager entityManager = EMF.createEntityManager();
+
+        ) {
+            return entityManager.createQuery("select count(c.id) from Course c ", Long.class).getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
